@@ -1,22 +1,30 @@
 <section class="container educacion">
   <h3>Educación</h3>
   <ul id="educacion">
+    <!--reemplazamos por datos dinamicos y dejamos solo 1 modelo de lista q se clona por "ngfor"-->
     <li>
+      <!--*ngFor = "let educacion of educacionList"-->
       <h4>
         <img
           alt="Arg Prog Logo"
           src="../assets/APLogo.png"
           class="edulogo argproglogo"
-        />
-        Argentina Programa: Primera etapa<span>dic.-2021</span>
+        /><!--[src]="educacion.logo"-->
+        Argentina Programa: Primera etapa<!--{{educacion.escuela}}--><span
+          >dic.-2021<!--{{educacion.fecha_finalizacion}}--></span
+        >
       </h4>
       <div>Conocimientos en:</div>
+      <!--educacion tendra q tener una lista de "conocimientos" para mostrar por "ngfor"-->
       <ul>
-        <li>Fundamentos de la programación</li>
+        <!--*ngFor = let conocimiento of educacion.conocimientos-->
+        <li>Fundamentos de la programación<!--{{conocimiento}}--></li>
         <li>Programación imperativa y estructuras de datos de JavaScript</li>
         <li>Programación con Objetos, Ruby</li>
+        <!--Si no funciona, cambiar la forma de mostrar los conocimientos de "li" para mostrar todas con un solo array-->
       </ul>
     </li>
+    <!--borrar a partir de aca-->
     <li>
       <h4>
         <img alt="Udemy Logo" src="../assets/Udemy_logo.png" class="edulogo" />

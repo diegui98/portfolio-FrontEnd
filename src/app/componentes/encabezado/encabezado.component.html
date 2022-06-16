@@ -1,10 +1,16 @@
-<div class="container" id="name_and_tittle">
+<div
+  class="container"
+  id="name_and_tittle"
+  style="background-image: url('../../../assets/fondo-nombre.jpg')"
+>
+  <!--[style]="miPortfolio.background_name_and_tittle"-->
   <img
     id="profile_photo"
     src="../assets\blank-profile.jpg"
     alt="Foto de perfil."
-  />
-  <h1 id="my_name">Diego Otranto</h1>
-  <div class="my_tittle">Programmer</div>
-  <div class="my_tittle">Full-stack Junior</div>
+  /><!--[src]="miPorfolio.profile_photo"-->
+  <h1 id="my_name">Diego Otranto<!--{{miPortfolio.nombre}}--></h1>
+  <div class="my_tittle">
+    Programmer Full-stack Junior<!--{{miPortfolio.titulo}}-->
+  </div>
 </div>

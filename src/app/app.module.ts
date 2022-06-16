@@ -11,6 +11,7 @@ import { EducacionComponent } from './componentes/educacion/educacion.component'
 import { HabilidadesComponent } from './componentes/habilidades/habilidades.component';
 import { ProyectosComponent } from './componentes/proyectos/proyectos.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,14 +22,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EduhabComponent,
     EducacionComponent,
     HabilidadesComponent,
-    ProyectosComponent
+    ProyectosComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, NgbModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
