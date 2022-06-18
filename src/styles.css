@@ -2,6 +2,7 @@
 
 body {
   background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+  font-family: lato;
 }
 
 .container.eduhab {
@@ -13,7 +14,7 @@ body {
   padding-right: 10px;
 }
 
-.container.eduhab > .row > .col-5 {
+.container.eduhab > .row > .col-4 {
   padding-left: 0px;
 }
 
@@ -24,12 +25,27 @@ body {
   background-size: cover;
 }
 
+#profile_AP {
+  width: 115px;
+  margin-top: 14px;
+  border: 2px solid #212529e3;
+  border-radius: 50px;
+  height: 65px;
+  float: left;
+  background-color: black;
+}
+
 #profile_photo {
   width: 120px;
   margin-top: 14px;
   border: 2px solid #212529e3;
   border-radius: 50px;
   height: 120px;
+}
+
+#login-btn {
+  float: right;
+  margin-top: 14px;
 }
 
 #my_name {
@@ -40,9 +56,7 @@ body {
 .my_tittle {
   color: #212529a6;
   display: inline-block;
-  width: 120px;
   text-align: center;
-  word-spacing: 5px;
 }
 
 #my_info_container {

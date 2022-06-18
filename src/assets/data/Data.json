@@ -1,0 +1,22 @@
+{
+  "education": [
+    {
+      "escuela": "Argentina Programa: Primera etapa",
+      "imagen": "../assets/APLogoBlack.png",
+      "fecha_fin": "div.-2021",
+      "descripcion": "Curso Introductorio sobre los fundamentos básicos de la programación: Fundamentos, Programación imperativa, Programación con objetos."
+    },
+    {
+      "escuela": "The Complete Front-End Web Development Course!",
+      "imagen": "../assets/Udemy_logo.png",
+      "fecha_fin": "feb.-2022",
+      "descripcion": "Curso online sobre Programacion web Front-End con uso de HTMl, CSS, Javascript, JQuery JavaScript library y Bootstrap."
+    },
+    {
+      "escuela": "Educacion IT: software Tester QA, Testing",
+      "imagen": "../assets/EducacionIT_logo.png",
+      "fecha_fin": "nov.-2021",
+      "descripcion": "Curso online sobre los fundamentos del testing de software con implementacion de: Jira, TestLink, Apache JMeter, Selenium IDE, Conceptos de calidad, Casos de prueba, Conceptos de automatización, Pruebas no funcionales, Visiondel QA en la gestion de proyectos."
+    }
+  ]
+}
