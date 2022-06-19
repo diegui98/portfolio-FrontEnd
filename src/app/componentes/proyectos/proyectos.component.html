@@ -1,51 +1,21 @@
 <section class="container proyectos">
   <h3>Proyectos</h3>
+  <button
+    type="button"
+    class="btn proyectosbtn"
+    [ngClass]="status ? 'btn-info' : 'btn-warning'"
+    (click)="buttonToggle()"
+  >
+    {{ buttonText }}
+  </button>
   <ul>
-    <li>
-      <button
-        type="button"
-        id="TaskBut"
-        class="btn btn-info proyectosbtn"
-        onclick="ButtonToggle('TaskInfo', 'TaskBut');"
-      >
-        Ver mas
-      </button>
-      Lista de que haceres/recordatorios.
-      <div id="TaskInfo" class="container viendoMas ocultando">
-        <p>
-          Proyecto pequeño. Lista para programar y organizar tareas por hacer,
-          permite marcar "importantes", agregar mas tareas con su nombre y fecha
-          limite, creada con angular, con su base de datos almacenando las
-          tareas.
-        </p>
-        <img
-          alt="Task List"
-          src="../assets/Task_list.PNG"
-          class="proyectoimg"
-        />
-      </div>
-    </li>
-
-    <li>
-      <button
-        type="button"
-        id="PipBut"
-        class="btn btn-info proyectosbtn"
-        onclick="ButtonToggle('PipInfo', 'PipBut');"
-      >
-        Ver mas
-      </button>
-      Pip-boy Web.
-      <div id="PipInfo" class="container viendoMas ocultando">
-        <p>
-          Proyecto pequeño, multiples pestañas del clasico PipBoy de fallot,
-          multiples estructuras html con sus diseños y JS
-        </p>
-        <img
-          alt="PipBoy html"
-          src="../assets/Pip_boy.PNG"
-          class="proyectoimg"
-        />
+    <li *ngFor="let proyecto of misProyectos">
+      <span id="proyectoNombre">{{ proyecto.nombre }}</span>
+      <p>
+        {{ proyecto.descripcion }}
+      </p>
+      <div class="container" [ngClass]="status ? 'ocultando' : 'viendoMas'">
+        <img alt="Img Proyecto" [src]="proyecto.imagen" class="proyectoimg" />
       </div>
     </li>
   </ul>

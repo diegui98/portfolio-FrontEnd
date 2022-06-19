@@ -13,6 +13,8 @@ import { ProyectosComponent } from './componentes/proyectos/proyectos.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { ExperienciaComponent } from './componentes/experiencia/experiencia.component';
+import { IniciarSesionComponent } from './componentes/iniciar-sesion/iniciar-sesion.component';
+import { PortfolioComponent } from './componentes/portfolio/portfolio.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { ExperienciaComponent } from './componentes/experiencia/experiencia.comp
     HabilidadesComponent,
     ProyectosComponent,
     ExperienciaComponent,
+    IniciarSesionComponent,
+    PortfolioComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, HttpClientModule],
   providers: [],
