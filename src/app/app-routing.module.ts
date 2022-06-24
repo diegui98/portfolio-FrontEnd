@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: 'portfolio',
     component: PortfolioComponent,
-    canActivate: [GuardGuard],
+    //canActivate: [GuardGuard],
   },
   { path: 'iniciar-sesion', component: IniciarSesionComponent },
   { path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full' },
