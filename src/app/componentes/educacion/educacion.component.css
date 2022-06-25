@@ -4,14 +4,8 @@
   margin-right: 10px;
 }
 
-.btn-add {
-  float: right;
-  border-radius: 100%;
-  font-weight: bold;
-  margin-top: 5px;
-  margin-left: 2px;
-  width: 35px;
-  height: 35px;
+.btn-add-m {
+  margin-right: 4px;
 }
 
 .form-container {
@@ -41,4 +35,17 @@
 
 .titulo-form {
   margin-left: 5px;
+}
+
+.delete-container {
+  width: 43%;
+  border: 2px solid #bd272766;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.delete-btn {
+  margin-bottom: 4px;
+  width: 50%;
 }

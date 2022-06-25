@@ -11,7 +11,8 @@ export class EducacionComponent implements OnInit {
   educacionList: any;
   addStatus: boolean = false;
   addText: String = '+';
-  editFormId: any = '';
+  editFormId: any = 0;
+  deleteId: any = 0;
   form: FormGroup;
 
   constructor(
@@ -33,16 +34,6 @@ export class EducacionComponent implements OnInit {
     });
   }
 
-  deleteEducacion() {}
-
-  showEditEducacion(id: any) {
-    if (this.editFormId !== id[0]) {
-      this.editFormId = id[0];
-    } else if (this.editFormId == id[0]) {
-      this.editFormId = '';
-    }
-  }
-
   showAddForm(): void {
     if (this.addStatus) {
       this.addText = '+';
@@ -50,6 +41,24 @@ export class EducacionComponent implements OnInit {
       this.addText = '-';
     }
     this.addStatus = !this.addStatus;
+  }
+
+  showEditEducacion(id: any) {
+    if (this.editFormId !== id[0]) {
+      this.editFormId = id[0];
+      this.deleteId = 0;
+    } else if (this.editFormId == id[0]) {
+      this.editFormId = 0;
+    }
+  }
+
+  showDeleteEducacion(id: any) {
+    if (this.deleteId !== id[0]) {
+      this.deleteId = id[0];
+      this.editFormId = 0;
+    } else if (this.deleteId == id[0]) {
+      this.deleteId = 0;
+    }
   }
 
   get escuela() {
@@ -67,25 +76,31 @@ export class EducacionComponent implements OnInit {
     return this.form.get('descripcion');
   }
 
-  editarEduFormulario(event: Event) {
-    event.preventDefault;
-    this.portfolioService
-      .editEducacion(
-        this.editFormId,
-        this.escuela?.value,
-        this.imagen?.value,
-        this.fecha_fin?.value,
-        this.descripcion?.value
-      )
-      .subscribe((data) => console.log(data));
-    window.location.reload();
-  }
-
   agregarEduFormulario(event: Event) {
     event.preventDefault;
+    let postUrl: string = 'educacion/crear';
     this.portfolioService
-      .postEducacion(this.form.value)
+      .postPortfolio(this.form.value, postUrl)
       .subscribe((data) => console.log(data));
-    window.location.reload();
+    setTimeout(location.reload.bind(location), 800);
+  }
+
+  editarEduFormulario(event: Event) {
+    event.preventDefault;
+    let parametros = {
+      escuela: this.escuela?.value,
+      imagen: this.imagen?.value,
+      fecha_fin: this.fecha_fin?.value,
+      descripcion: this.descripcion?.value,
+    };
+    this.portfolioService
+      .editPortfolio('educacion/editar/', this.editFormId, parametros)
+      .subscribe((data) => console.log(data));
+    setTimeout(location.reload.bind(location), 800);
+  }
+
+  borrarEducacion(id: any) {
+    this.portfolioService.deletePortfolio('educacion/borrar/' + id).subscribe();
+    setTimeout(location.reload.bind(location), 800);
   }
 }

@@ -1,5 +1,108 @@
 <section class="container habilidades">
   <h3>Habilidades</h3>
+  <button
+    type="button"
+    class="btn btn-add"
+    [ngClass]="addStatus ? 'btn-warning' : 'btn-success'"
+    (click)="showAddForm()"
+  >
+    {{ addText }}
+  </button>
+  <div *ngIf="addStatus" class="mt-2 container form-container">
+    <h4>Agregar Habilidad</h4>
+    <form
+      [formGroup]="form"
+      class="m-2"
+      (ngSubmit)="agregarHabFormulario($event)"
+    >
+      <div class="mb-3">
+        <label for="habilidad-d-form" class="form-label">Habilidad Dura</label>
+        <input
+          type="radio"
+          name="habilidad"
+          formControlName="habilidad"
+          value="habilidades_duras"
+          class="radio-hab"
+          id="habilidad-d-form"
+          aria-describedby="habilidad-d-Help"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="habilidad-b-form" class="form-label"
+          >Habilidad Blanda</label
+        >
+        <input
+          type="radio"
+          name="habilidad"
+          formControlName="habilidad"
+          value="habilidades_blandas"
+          class="radio-hab"
+          id="habilidad-b-form"
+          aria-describedby="habilidad-b-Help"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="nombre-form" class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': nombre?.errors && nombre?.touched,
+            'is-valid': !nombre?.errors && nombre?.touched
+          }"
+          id="nombre-form"
+          formControlName="nombre"
+        />
+        <div *ngIf="nombre?.errors && nombre?.touched">
+          <p *ngIf="nombre?.hasError('required')" class="text-danger">
+            El nombre es requerido.
+          </p>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="nivel-form" class="form-label">Nivel</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': nivel?.errors && nivel?.touched,
+            'is-valid': !nivel?.errors && nivel?.touched
+          }"
+          id="nivel-form"
+          formControlName="nivel"
+        />
+        <div *ngIf="nivel?.errors && nivel?.touched">
+          <p *ngIf="nivel?.hasError('required')" class="text-danger">
+            El nivel es requerido.
+          </p>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="stat_bar-form" class="form-label"
+          >Relleno de la barra</label
+        >
+        <select
+          id="stat_bar"
+          name="stat_bar"
+          class="radio-hab"
+          formControlName="stat_bar"
+        >
+          <option value="0">0%</option>
+          <option value="10">10%</option>
+          <option value="20">20%</option>
+          <option value="30">30%</option>
+          <option value="40">40%</option>
+          <option value="50">50%</option>
+          <option value="60">60%</option>
+          <option value="70">70%</option>
+          <option value="80">80%</option>
+          <option value="90">90%</option>
+          <option value="100">100%</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Agregar</button>
+    </form>
+  </div>
   <h4>Duras:</h4>
   <ul id="habilidades-duras">
     <li *ngFor="let habilidadD of misHabilidadesDuras">

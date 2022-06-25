@@ -13,29 +13,17 @@ export class PortfolioService {
     return this.http.get(this.url + 'data');
   }
 
-  postEducacion(educacion: any): Observable<any> {
-    return this.http.post(this.url + 'educacion/crear', educacion);
+  postPortfolio(obj: any, postUrl: string): Observable<any> {
+    return this.http.post(this.url + postUrl, obj);
   }
 
-  editEducacion(
-    id: any,
-    escuelaP: string,
-    imagenP: string,
-    fecha_finP: string,
-    descripcionP: string
-  ): Observable<any> {
-    let params = new HttpParams();
-    params = params.append('escuela', escuelaP);
-    params = params.append('imagen', imagenP);
-    params = params.append('fecha_fin', fecha_finP);
-    params = params.append('descripcion', descripcionP);
-    return this.http.put(this.url + 'educacion/editar/' + id, null, {
-      params: {
-        escuela: escuelaP,
-        imagen: imagenP,
-        fecha_fin: fecha_finP,
-        descripcion: descripcionP,
-      },
+  editPortfolio(editUrl: String, id: any, parametros: any): Observable<any> {
+    return this.http.put(this.url + editUrl + id, null, {
+      params: parametros,
     });
+  }
+
+  deletePortfolio(deleteUrl: String): Observable<any> {
+    return this.http.delete(this.url + deleteUrl);
   }
 }

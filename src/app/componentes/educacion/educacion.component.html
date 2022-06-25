@@ -2,7 +2,7 @@
   <h3>Educación</h3>
   <button
     type="button"
-    class="btn btn-add"
+    class="btn btn-add btn-add-m"
     [ngClass]="addStatus ? 'btn-warning' : 'btn-success'"
     (click)="showAddForm()"
   >
@@ -108,7 +108,8 @@
             class="btn btn-add"
             [ngClass]="{
               'btn-warning': editFormId == [educacion.id],
-              'btn-primary': editFormId !== [educacion.id]
+              'btn-primary': editFormId == 0,
+              'btn-secondary': editFormId !== 0 && editFormId !== [educacion.id]
             }"
             (click)="showEditEducacion([educacion.id])"
           >
@@ -132,8 +133,12 @@
           <button
             type="button"
             class="btn btn-add"
-            [ngClass]="addStatus ? 'btn-warning' : 'btn-danger'"
-            (click)="deleteEducacion()"
+            [ngClass]="{
+              'btn-warning': deleteId == [educacion.id],
+              'btn-danger': deleteId == 0,
+              'btn-secondary': deleteId !== 0 && deleteId !== [educacion.id]
+            }"
+            (click)="showDeleteEducacion([educacion.id])"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -241,6 +246,19 @@
           </div>
           <button type="submit" class="btn btn-primary">Editar</button>
         </form>
+      </div>
+      <div
+        class="container delete-container"
+        *ngIf="deleteId == [educacion.id]"
+      >
+        <h4>¿Seguro que desea eliminar?</h4>
+        <button
+          type="button"
+          class="btn btn-danger delete-btn"
+          (click)="borrarEducacion([educacion.id])"
+        >
+          Eliminar
+        </button>
       </div>
     </li>
   </ul>
