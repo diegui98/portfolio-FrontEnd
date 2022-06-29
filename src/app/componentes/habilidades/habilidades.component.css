@@ -1,3 +1,43 @@
+.habilidades {
+  padding-right: 7px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.habilidad-container {
+  padding: 0;
+  width: 70%;
+  margin: 0;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.container-buttons {
+  width: 74px;
+  height: 42px;
+  float: right;
+}
+
+.img-btn {
+  margin-bottom: 5px;
+  margin-left: -4px;
+}
+
+.delete-container {
+  border: 2px solid #bd272766;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.delete-btn {
+  margin-bottom: 4px;
+  width: 50%;
+}
+
 .radio-hab {
   margin-left: 6px;
 }
@@ -7,7 +47,7 @@
 }
 
 .level-progress {
-  width: 90%;
+  width: 98%;
   height: 10px;
   border: 2px solid;
   display: inline-block;
@@ -34,7 +74,7 @@
 
 .habilidad-calificacion {
   float: right;
-  margin-right: 46px;
+  margin-right: 5px;
   font-weight: bold;
 }
 

@@ -1,19 +1,231 @@
 <section class="container proyectos">
   <h3>Proyectos</h3>
-  <button
-    type="button"
-    class="btn proyectosbtn"
-    [ngClass]="status ? 'btn-info' : 'btn-warning'"
-    (click)="buttonToggle()"
-  >
-    {{ buttonText }}
+  <button class="btn btn-primary btn-github" (click)="newTab()">
+    Ver en Github
   </button>
+  <div class="container addimg-buttons-container">
+    <button
+      type="button"
+      class="btn proyectosbtn"
+      [ngClass]="status ? 'btn-info' : 'btn-warning'"
+      (click)="imagenesToggle()"
+    >
+      {{ buttonText }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-add btn-add-m"
+      [ngClass]="addStatus ? 'btn-warning' : 'btn-success'"
+      (click)="showAddForm()"
+    >
+      {{ addText }}
+    </button>
+  </div>
+  <div *ngIf="addStatus" class="mt-2 container form-container">
+    <h4>Agregar Proyecto</h4>
+    <form
+      [formGroup]="form"
+      class="m-2"
+      (ngSubmit)="agregarProyectoFormulario($event)"
+    >
+      <div class="mb-3">
+        <label for="nombre-form" class="form-label">Nombre del proyecto</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': nombre?.errors && nombre?.touched,
+            'is-valid': !nombre?.errors && nombre?.touched
+          }"
+          id="nombre-form"
+          formControlName="nombre"
+        />
+        <div *ngIf="nombre?.errors && nombre?.touched">
+          <p *ngIf="nombre?.hasError('required')" class="text-danger">
+            El nombre es requerido.
+          </p>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="descripcion-form" class="form-label">Descripción</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': descripcion?.errors && descripcion?.touched,
+            'is-valid': !descripcion?.errors && descripcion?.touched
+          }"
+          id="descripcion-form"
+          formControlName="descripcion"
+        />
+        <div *ngIf="descripcion?.errors && descripcion?.touched">
+          <p *ngIf="descripcion?.hasError('required')" class="text-danger">
+            La descripcion es requerida.
+          </p>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="imagen-form" class="form-label">Imagen</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': imagen?.errors && imagen?.touched,
+            'is-valid': !imagen?.errors && imagen?.touched
+          }"
+          id="imagen-form"
+          formControlName="imagen"
+        />
+        <div *ngIf="imagen?.errors && imagen?.touched">
+          <p *ngIf="imagen?.hasError('required')" class="text-danger">
+            La imagen es requerida.
+          </p>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Agregar</button>
+    </form>
+  </div>
   <ul>
     <li *ngFor="let proyecto of misProyectos">
       <span id="proyectoNombre">{{ proyecto.nombre }}</span>
+      <div class="container-buttons">
+        <button
+          type="button"
+          class="btn btn-add"
+          [ngClass]="{
+            'btn-warning': editFormId == [proyecto.id],
+            'btn-primary': editFormId == 0,
+            'btn-secondary': editFormId !== 0 && editFormId !== [proyecto.id]
+          }"
+          (click)="showEditProyecto([proyecto.id])"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-pencil-square img-btn"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+            />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="btn btn-add"
+          [ngClass]="{
+            'btn-warning': deleteId == [proyecto.id],
+            'btn-danger': deleteId == 0,
+            'btn-secondary': deleteId !== 0 && deleteId !== [proyecto.id]
+          }"
+          (click)="showDeleteProyecto([proyecto.id])"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-trash img-btn"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+            />
+          </svg>
+        </button>
+      </div>
       <p>
         {{ proyecto.descripcion }}
       </p>
+      <div
+        *ngIf="editFormId == [proyecto.id]"
+        class="mt-2 container form-container"
+      >
+        <h4>Editar Proyecto</h4>
+        <form
+          [formGroup]="form"
+          class="m-2"
+          (ngSubmit)="editarProyectoFormulario($event)"
+        >
+          <div class="mb-3">
+            <label for="nombre-form" class="form-label"
+              >Nombre del proyecto</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': nombre?.errors && nombre?.touched,
+                'is-valid': !nombre?.errors && nombre?.touched
+              }"
+              id="nombre-form"
+              formControlName="nombre"
+            />
+            <div *ngIf="nombre?.errors && nombre?.touched">
+              <p *ngIf="nombre?.hasError('required')" class="text-danger">
+                El nombre es requerido.
+              </p>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="descripcion-form" class="form-label">Descripción</label>
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': descripcion?.errors && descripcion?.touched,
+                'is-valid': !descripcion?.errors && descripcion?.touched
+              }"
+              id="descripcion-form"
+              formControlName="descripcion"
+            />
+            <div *ngIf="descripcion?.errors && descripcion?.touched">
+              <p *ngIf="descripcion?.hasError('required')" class="text-danger">
+                La descripcion es requerida.
+              </p>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="imagen-form" class="form-label">Imagen</label>
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': imagen?.errors && imagen?.touched,
+                'is-valid': !imagen?.errors && imagen?.touched
+              }"
+              id="imagen-form"
+              formControlName="imagen"
+            />
+            <div *ngIf="imagen?.errors && imagen?.touched">
+              <p *ngIf="imagen?.hasError('required')" class="text-danger">
+                La imagen es requerida.
+              </p>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Editar</button>
+        </form>
+      </div>
+      <div class="container delete-container" *ngIf="deleteId == [proyecto.id]">
+        <h4>¿Seguro que desea eliminar?</h4>
+        <button
+          type="button"
+          class="btn btn-danger delete-btn"
+          (click)="borrarProyecto([proyecto.id])"
+        >
+          Eliminar
+        </button>
+      </div>
       <div class="container" [ngClass]="status ? 'ocultando' : 'viendoMas'">
         <img alt="Img Proyecto" [src]="proyecto.imagen" class="proyectoimg" />
       </div>

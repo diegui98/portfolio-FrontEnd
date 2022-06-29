@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
 
 @Component({
@@ -9,9 +10,24 @@ import { PortfolioService } from 'src/app/servicios/portfolio.service';
 export class ProyectosComponent implements OnInit {
   misProyectos: any;
   status: boolean = true;
-  buttonText: String = 'Mostrar imagenes';
+  buttonText: string = 'Mostrar imagenes';
+  addStatus: boolean = false;
+  addText: string = '+';
+  editFormId: any = 0;
+  deleteId: any = 0;
+  form: FormGroup;
 
-  constructor(private datosPortfolio: PortfolioService) {}
+  constructor(
+    private datosPortfolio: PortfolioService,
+    private formBuilder: FormBuilder,
+    private portfolioService: PortfolioService
+  ) {
+    this.form = this.formBuilder.group({
+      nombre: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+      imagen: ['', [Validators.required]],
+    });
+  }
 
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos().subscribe((data) => {
@@ -19,12 +35,89 @@ export class ProyectosComponent implements OnInit {
     });
   }
 
-  buttonToggle(): void {
+  //Boton de github, abre nueva pestaña
+  newTab() {
+    window.open('https://github.com/diegui98', '_blank');
+  }
+
+  //Alterna en mostrar y ocultar las imagenes
+  imagenesToggle(): void {
     if (this.status) {
       this.buttonText = 'Ocultar imagenes';
     } else {
       this.buttonText = 'Mostrar imagenes';
     }
     this.status = !this.status;
+  }
+
+  //Alterna en mostrar y ocultar el formulario add y cambia el texto del boton de + a -
+  showAddForm() {
+    if (this.addStatus) {
+      this.addText = '+';
+    } else if (!this.addStatus) {
+      this.addText = '-';
+    }
+    this.addStatus = !this.addStatus;
+  }
+
+  //Muestra el formulario edit dependiendo de la id y esconde al resto si fueron abiertos anteriormente
+  showEditProyecto(id: any) {
+    if (this.editFormId !== id[0]) {
+      this.editFormId = id[0];
+      this.deleteId = 0;
+    } else if (this.editFormId == id[0]) {
+      this.editFormId = 0;
+    }
+  }
+
+  //Muestra el boton de confirmacion dependiendo de la id y esconde al resto si fueron abiertos anteriormente
+  showDeleteProyecto(id: any) {
+    if (this.deleteId !== id[0]) {
+      this.deleteId = id[0];
+      this.editFormId = 0;
+    } else if (this.deleteId == id[0]) {
+      this.deleteId = 0;
+    }
+  }
+
+  get nombre() {
+    return this.form.get('nombre');
+  }
+  get descripcion() {
+    return this.form.get('descripcion');
+  }
+  get imagen() {
+    return this.form.get('imagen');
+  }
+
+  //Control de los formularios
+
+  //Contacta al portfolio.service para el postRequest
+  agregarProyectoFormulario(event: Event) {
+    event.preventDefault;
+    let postUrl: string = 'proyectos/crear';
+    this.portfolioService.postPortfolio(this.form.value, postUrl).subscribe();
+    setTimeout(location.reload.bind(location), 800);
+  }
+
+  //Contacta al portfolio.service para el putRequest
+  editarProyectoFormulario(event: Event) {
+    event.preventDefault;
+    //Creo los parametros necesarios
+    let parametros = {
+      nombre: this.nombre?.value,
+      descripcion: this.descripcion?.value,
+      imagen: this.imagen?.value,
+    };
+    this.portfolioService
+      .editPortfolio('proyectos/editar/', this.editFormId, parametros)
+      .subscribe();
+    setTimeout(location.reload.bind(location), 800);
+  }
+
+  //Contacta al portfolio.service para el deleteRequest
+  borrarProyecto(id: any) {
+    this.portfolioService.deletePortfolio('proyectos/borrar/' + id).subscribe();
+    setTimeout(location.reload.bind(location), 800);
   }
 }

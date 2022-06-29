@@ -34,6 +34,9 @@ export class EducacionComponent implements OnInit {
     });
   }
 
+  // Control de los botones que muestran los formularios
+
+  //Alterna en mostrar y ocultar el formulario add y cambia el texto del boton de + a -
   showAddForm(): void {
     if (this.addStatus) {
       this.addText = '+';
@@ -43,6 +46,7 @@ export class EducacionComponent implements OnInit {
     this.addStatus = !this.addStatus;
   }
 
+  //Muestra el formulario edit dependiendo de la id y esconde al resto si fueron abiertos anteriormente
   showEditEducacion(id: any) {
     if (this.editFormId !== id[0]) {
       this.editFormId = id[0];
@@ -52,6 +56,7 @@ export class EducacionComponent implements OnInit {
     }
   }
 
+  //Muestra el boton de confirmacion dependiendo de la id y esconde al resto si fueron abiertos anteriormente
   showDeleteEducacion(id: any) {
     if (this.deleteId !== id[0]) {
       this.deleteId = id[0];
@@ -60,6 +65,8 @@ export class EducacionComponent implements OnInit {
       this.deleteId = 0;
     }
   }
+
+  // getters
 
   get escuela() {
     return this.form.get('escuela');
@@ -76,17 +83,20 @@ export class EducacionComponent implements OnInit {
     return this.form.get('descripcion');
   }
 
+  //Control de los formularios
+
+  //Contacta al portfolio.service para el postRequest
   agregarEduFormulario(event: Event) {
     event.preventDefault;
     let postUrl: string = 'educacion/crear';
-    this.portfolioService
-      .postPortfolio(this.form.value, postUrl)
-      .subscribe((data) => console.log(data));
+    this.portfolioService.postPortfolio(this.form.value, postUrl).subscribe();
     setTimeout(location.reload.bind(location), 800);
   }
 
+  //Contacta al portfolio.service para el putRequest
   editarEduFormulario(event: Event) {
     event.preventDefault;
+    //Creo los parametros necesarios
     let parametros = {
       escuela: this.escuela?.value,
       imagen: this.imagen?.value,
@@ -95,10 +105,11 @@ export class EducacionComponent implements OnInit {
     };
     this.portfolioService
       .editPortfolio('educacion/editar/', this.editFormId, parametros)
-      .subscribe((data) => console.log(data));
+      .subscribe();
     setTimeout(location.reload.bind(location), 800);
   }
 
+  //Contacta al portfolio.service para el deleteRequest
   borrarEducacion(id: any) {
     this.portfolioService.deletePortfolio('educacion/borrar/' + id).subscribe();
     setTimeout(location.reload.bind(location), 800);
