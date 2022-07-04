@@ -5,6 +5,7 @@
     class="btn btn-add"
     [ngClass]="addStatus ? 'btn-warning' : 'btn-success'"
     (click)="showAddForm()"
+    *ngIf="isAdmin"
   >
     {{ addText }}
   </button>
@@ -107,7 +108,13 @@
   <ul id="habilidades-duras">
     <li *ngFor="let habilidadD of misHabilidadesDuras">
       <div class="habilidad-btn-container">
-        <div class="habilidad-container container">
+        <div
+          class="container"
+          [ngClass]="{
+            'habilidad-container-usr': !isAdmin,
+            'habilidad-container-adm': isAdmin
+          }"
+        >
           {{ habilidadD.nombre
           }}<span class="habilidad-calificacion">{{ habilidadD.nivel }}</span>
           <div class="stat-bar">
@@ -117,7 +124,7 @@
           </div>
         </div>
 
-        <div class="container-buttons">
+        <div class="container-buttons" *ngIf="isAdmin">
           <button
             type="button"
             class="btn btn-add"
@@ -263,7 +270,13 @@
   <ul id="habilidades-blandas">
     <li *ngFor="let habilidadB of misHabilidadesBlandas">
       <div class="habilidad-btn-container">
-        <div class="habilidad-container container">
+        <div
+          class="container"
+          [ngClass]="{
+            'habilidad-container-usr': !isAdmin,
+            'habilidad-container-adm': isAdmin
+          }"
+        >
           {{ habilidadB.nombre
           }}<span class="habilidad-calificacion">{{ habilidadB.nivel }}</span>
           <div class="stat-bar">
@@ -272,7 +285,7 @@
             </div>
           </div>
         </div>
-        <div class="container-buttons">
+        <div class="container-buttons" *ngIf="isAdmin">
           <button
             type="button"
             class="btn btn-add"

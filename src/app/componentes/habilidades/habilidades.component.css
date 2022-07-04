@@ -7,7 +7,15 @@ ul {
   padding: 0;
 }
 
-.habilidad-container {
+.habilidad-container-usr {
+  padding: 0;
+  width: 95%;
+  margin: 0;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.habilidad-container-adm {
   padding: 0;
   width: 70%;
   margin: 0;

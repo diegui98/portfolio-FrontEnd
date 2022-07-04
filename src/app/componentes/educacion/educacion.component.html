@@ -5,6 +5,7 @@
     class="btn btn-add btn-add-m"
     [ngClass]="addStatus ? 'btn-warning' : 'btn-success'"
     (click)="showAddForm()"
+    *ngIf="isAdmin"
   >
     {{ addText }}
   </button>
@@ -102,7 +103,7 @@
           {{ educacion.escuela }}
           <span>{{ educacion.fecha_fin }}</span>
         </h4>
-        <div class="container-buttons">
+        <div class="container-buttons" *ngIf="isAdmin">
           <button
             type="button"
             class="btn btn-add"

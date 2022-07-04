@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
+import { TokenService } from 'src/app/servicios/token.service';
 
 @Component({
   selector: 'app-habilidades',
@@ -17,11 +18,14 @@ export class HabilidadesComponent implements OnInit {
   deleteIdD: any = 0;
   deleteIdB: any = 0;
   form: FormGroup;
+  roles!: string[];
+  isAdmin = false;
 
   constructor(
     private datosPortfolio: PortfolioService,
     private formBuilder: FormBuilder,
-    private portfolioService: PortfolioService
+    private portfolioService: PortfolioService,
+    private tokenService: TokenService
   ) {
     this.form = this.formBuilder.group({
       habilidad: [''],
@@ -35,6 +39,12 @@ export class HabilidadesComponent implements OnInit {
     this.datosPortfolio.obtenerDatos().subscribe((data) => {
       this.misHabilidadesDuras = data.habilidades_duras;
       this.misHabilidadesBlandas = data.habilidades_blandas;
+    });
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach((rol) => {
+      if (rol === 'ROLE_ADMIN') {
+        this.isAdmin = true;
+      }
     });
   }
 

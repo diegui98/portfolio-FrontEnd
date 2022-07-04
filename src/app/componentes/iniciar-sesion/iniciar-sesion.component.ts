@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginUsuario } from 'src/app/models/login-usuario';
 import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
+import { TokenService } from 'src/app/servicios/token.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -9,40 +11,44 @@ import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
   styleUrls: ['./iniciar-sesion.component.css'],
 })
 export class IniciarSesionComponent implements OnInit {
-  form: FormGroup;
+  isLogged = false;
+  isLoginFail = false;
+  loginUsuario!: LoginUsuario;
+  nombreUsuario!: string;
+  password!: string;
+  roles: string[] = [];
+
   constructor(
-    private formBuilder: FormBuilder,
+    private tokenService: TokenService,
     private autenticacionService: AutenticacionService,
     private ruta: Router
-  ) {
-    this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      deviceInfo: this.formBuilder.group({
-        deviceId: ['17867868768'],
-        deviceType: ['DEVICE_TYPE_ANDROID'],
-        notificationToken: ['67657575eececc34'],
-      }),
-    });
+  ) {}
+
+  ngOnInit(): void {
+    if (this.tokenService.getToken()) {
+      this.isLogged = true;
+      this.isLoginFail = false;
+      this.roles = this.tokenService.getAuthorities();
+    }
   }
 
-  ngOnInit(): void {}
+  onLogin(): void {
+    this.loginUsuario = new LoginUsuario(this.nombreUsuario, this.password);
+    this.autenticacionService.login(this.loginUsuario).subscribe(
+      (data) => {
+        this.isLogged = true;
+        this.isLoginFail = false;
 
-  get Email() {
-    return this.form.get('email');
-  }
-
-  get Password() {
-    return this.form.get('password');
-  }
-
-  onEnviar(event: Event) {
-    event.preventDefault;
-    this.autenticacionService
-      .IniciarSesion(this.form.value)
-      .subscribe((data) => {
-        console.log('DATA:' + JSON.stringify(data));
-        this.ruta.navigate(['/portfolio']);
-      });
+        this.tokenService.setToken(data.token);
+        this.tokenService.setUserName(data.nombreUsuario);
+        this.tokenService.setAuthorities(data.authorities);
+        this.roles = data.authorities;
+        this.ruta.navigate(['/inicio']);
+      },
+      (err) => {
+        this.isLogged = false;
+        this.isLoginFail = true;
+      }
+    );
   }
 }

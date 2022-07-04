@@ -8,29 +8,34 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AutenticacionService } from './autenticacion.service';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GuardGuard implements CanActivate {
-  constructor(
-    private autenticacionServicio: AutenticacionService,
-    private ruta: Router
-  ) {}
+  realRol!: string;
+
+  constructor(private tokenService: TokenService, private router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    let currentUser = this.autenticacionServicio.UsuarioAutenticado;
-    if (currentUser && currentUser.accessToken) {
-      return true;
-    } else {
-      this.ruta.navigate(['/iniciar-sesion']);
+  ): boolean {
+    const expectedRol = route.data['expectedRol'];
+    const roles = this.tokenService.getAuthorities();
+    this.realRol = 'user';
+    roles.forEach((rol) => {
+      if (rol === 'ROLE_ADMIN') {
+        this.realRol = 'admin';
+      }
+    });
+    if (
+      !this.tokenService.getToken() ||
+      expectedRol.indexOf(this.realRol) === -1
+    ) {
+      this.router.navigate(['/']);
       return false;
     }
+    return true;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
+import { TokenService } from 'src/app/servicios/token.service';
 
 @Component({
   selector: 'app-acerca-de-mi',
@@ -9,12 +10,23 @@ import { PortfolioService } from 'src/app/servicios/portfolio.service';
 export class AcercaDeMiComponent implements OnInit {
   miPortfolio: any;
   editForm: boolean = false;
+  roles!: string[];
+  isAdmin = false;
 
-  constructor(private datosPortfolio: PortfolioService) {}
+  constructor(
+    private datosPortfolio: PortfolioService,
+    private tokenService: TokenService
+  ) {}
 
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos().subscribe((data) => {
       this.miPortfolio = data.persona[0];
+    });
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach((rol) => {
+      if (rol === 'ROLE_ADMIN') {
+        this.isAdmin = true;
+      }
     });
   }
 

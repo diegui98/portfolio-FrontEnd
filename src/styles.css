@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-  background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+  background-color: #e6e9f0;
   font-family: lato;
 }
 
@@ -36,6 +36,7 @@ body {
 }
 
 #profile_photo {
+  margin-right: 120px;
   width: 120px;
   margin-top: 14px;
   border: 2px solid #212529e3;

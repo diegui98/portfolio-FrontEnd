@@ -8,6 +8,7 @@
       'btn-primary': editForm == false
     }"
     (click)="showEditAcerca()"
+    *ngIf="isAdmin"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +31,7 @@
     {{ miPortfolio.descripcion }}
   </p>
   <div *ngIf="editForm" class="form-container">
-    <h4>Editar Habilidad Dura</h4>
+    <h4>Editar Descripción</h4>
     <textarea
       class="form-control"
       name="editValue"

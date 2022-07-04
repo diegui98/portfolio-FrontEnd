@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
+import { TokenService } from 'src/app/servicios/token.service';
 
 @Component({
   selector: 'app-educacion',
@@ -14,11 +15,14 @@ export class EducacionComponent implements OnInit {
   editFormId: any = 0;
   deleteId: any = 0;
   form: FormGroup;
+  roles!: string[];
+  isAdmin = false;
 
   constructor(
     private datosPortfolio: PortfolioService,
     private formBuilder: FormBuilder,
-    private portfolioService: PortfolioService
+    private portfolioService: PortfolioService,
+    private tokenService: TokenService
   ) {
     this.form = this.formBuilder.group({
       escuela: ['', [Validators.required]],
@@ -31,6 +35,12 @@ export class EducacionComponent implements OnInit {
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos().subscribe((data) => {
       this.educacionList = data.educacion;
+    });
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach((rol) => {
+      if (rol === 'ROLE_ADMIN') {
+        this.isAdmin = true;
+      }
     });
   }
 
