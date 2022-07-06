@@ -38,14 +38,15 @@
       <div class="mb-3">
         <label for="imagen-form" class="form-label">Imagen</label>
         <input
-          type="text"
-          class="form-control"
+          type="file"
+          class="form-control file-upload"
           [ngClass]="{
             'is-invalid': imagen?.errors && imagen?.touched,
             'is-valid': !imagen?.errors && imagen?.touched
           }"
           id="imagen-form"
           formControlName="imagen"
+          (change)="findImgName($event)"
         />
         <div *ngIf="imagen?.errors && imagen?.touched">
           <p *ngIf="imagen?.hasError('required')" class="text-danger">
@@ -186,24 +187,6 @@
             <div *ngIf="escuela?.errors && escuela?.touched">
               <p *ngIf="escuela?.hasError('required')" class="text-danger">
                 La institución es requerida.
-              </p>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="imagen-form" class="form-label">Imagen</label>
-            <input
-              type="text"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid': imagen?.errors && imagen?.touched,
-                'is-valid': !imagen?.errors && imagen?.touched
-              }"
-              id="imagen-form"
-              formControlName="imagen"
-            />
-            <div *ngIf="imagen?.errors && imagen?.touched">
-              <p *ngIf="imagen?.hasError('required')" class="text-danger">
-                La imagen es requerida.
               </p>
             </div>
           </div>

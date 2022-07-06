@@ -14,6 +14,7 @@ export class EducacionComponent implements OnInit {
   addText: String = '+';
   editFormId: any = 0;
   deleteId: any = 0;
+  fileName: string = '';
   form: FormGroup;
   roles!: string[];
   isAdmin = false;
@@ -76,6 +77,12 @@ export class EducacionComponent implements OnInit {
     }
   }
 
+  //Encuentra el nombre de la imagen en el formulario add, input de 'imagen'
+  findImgName(event: any) {
+    const file: File = event.target.files[0];
+    this.fileName = file.name;
+  }
+
   // getters
 
   get escuela() {
@@ -99,7 +106,14 @@ export class EducacionComponent implements OnInit {
   agregarEduFormulario(event: Event) {
     event.preventDefault;
     let postUrl: string = 'educacion/crear';
-    this.portfolioService.postPortfolio(this.form.value, postUrl).subscribe();
+    let filePath: string = '../assets/' + this.fileName;
+    let newForm: any = {
+      escuela: this.escuela?.value,
+      imagen: filePath,
+      fecha_fin: this.fecha_fin?.value,
+      descripcion: this.descripcion?.value,
+    };
+    this.portfolioService.postPortfolio(newForm, postUrl).subscribe();
     setTimeout(location.reload.bind(location), 800);
   }
 
@@ -109,7 +123,6 @@ export class EducacionComponent implements OnInit {
     //Creo los parametros necesarios
     let parametros = {
       escuela: this.escuela?.value,
-      imagen: this.imagen?.value,
       fecha_fin: this.fecha_fin?.value,
       descripcion: this.descripcion?.value,
     };

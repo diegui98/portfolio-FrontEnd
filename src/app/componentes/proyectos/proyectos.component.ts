@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
+import { TokenService } from 'src/app/servicios/token.service';
 
 @Component({
   selector: 'app-proyectos',
@@ -14,12 +15,16 @@ export class ProyectosComponent implements OnInit {
   addText: string = '+';
   editFormId: any = 0;
   deleteId: any = 0;
+  fileName: string = '';
   form: FormGroup;
+  roles!: string[];
+  isAdmin = false;
 
   constructor(
     private datosPortfolio: PortfolioService,
     private formBuilder: FormBuilder,
-    private portfolioService: PortfolioService
+    private portfolioService: PortfolioService,
+    private tokenService: TokenService
   ) {
     this.form = this.formBuilder.group({
       nombre: ['', [Validators.required]],
@@ -33,6 +38,12 @@ export class ProyectosComponent implements OnInit {
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos().subscribe((data) => {
       this.misProyectos = data.proyectos;
+    });
+    this.roles = this.tokenService.getAuthorities();
+    this.roles.forEach((rol) => {
+      if (rol === 'ROLE_ADMIN') {
+        this.isAdmin = true;
+      }
     });
   }
 
@@ -80,6 +91,14 @@ export class ProyectosComponent implements OnInit {
     }
   }
 
+  //Encuentra el nombre de la imagen en el formulario add, input de 'imagen'
+  findImgName(event: any) {
+    const file: File = event.target.files[0];
+    this.fileName = file.name;
+  }
+
+  //getters
+
   get nombre() {
     return this.form.get('nombre');
   }
@@ -102,7 +121,15 @@ export class ProyectosComponent implements OnInit {
   agregarProyectoFormulario(event: Event) {
     event.preventDefault;
     let postUrl: string = 'proyectos/crear';
-    this.portfolioService.postPortfolio(this.form.value, postUrl).subscribe();
+    let filePath: string = '../assets/' + this.fileName;
+    let newForm: any = {
+      nombre: this.nombre?.value,
+      descripcion: this.descripcion?.value,
+      imagen: filePath,
+      tecnologiasUsadas: this.tecnologiasUsadas?.value,
+      caracteristicasNotables: this.caracteristicasNotables?.value,
+    };
+    this.portfolioService.postPortfolio(newForm, postUrl).subscribe();
     setTimeout(location.reload.bind(location), 800);
   }
 

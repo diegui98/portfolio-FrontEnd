@@ -30,6 +30,20 @@ export class AcercaDeMiComponent implements OnInit {
     });
   }
 
+  //Abre nuevas ventanas para las redes sociales
+  newTab(red: string) {
+    if (red == 'insta') {
+      window.open('https://www.instagram.com/diego.otranto/', '_blank');
+    } else if (red == 'link') {
+      window.open(
+        'https://www.linkedin.com/in/diego-otranto-231663178/',
+        '_blank'
+      );
+    } else if (red == 'gith') {
+      window.open('https://github.com/diegui98', '_blank');
+    }
+  }
+
   //Alterna en mostrar y ocultar el contenido del formulario y las clases del boton de agregar
   showEditAcerca() {
     this.editForm = !this.editForm;

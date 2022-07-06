@@ -12,3 +12,26 @@
   margin-top: 8px;
   margin-bottom: 4px;
 }
+
+.btn-redes {
+  border-radius: 100%;
+  font-weight: bold;
+  width: 35px;
+  height: 35px;
+  margin-left: 2px;
+}
+
+.redes-container {
+  width: 170px;
+  margin-bottom: 5px;
+}
+
+.btn-img {
+  margin-bottom: 5px;
+  margin-left: -4px;
+}
+
+.btn-insta {
+  background-color: #dc357e;
+  border-color: #dc357e;
+}

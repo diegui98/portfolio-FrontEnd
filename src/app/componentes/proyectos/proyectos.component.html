@@ -3,7 +3,7 @@
   <button class="btn btn-primary btn-github" (click)="newTab()">
     Ver en Github
   </button>
-  <div class="container addimg-buttons-container">
+  <div class="container addimg-buttons-container" *ngIf="isAdmin">
     <button
       type="button"
       class="btn btn-add btn-add-m"
@@ -58,15 +58,17 @@
       </div>
       <div class="mb-3">
         <label for="imagen-form" class="form-label">Imagen</label>
+
         <input
-          type="text"
-          class="form-control"
+          type="file"
+          class="form-control file-upload"
           [ngClass]="{
             'is-invalid': imagen?.errors && imagen?.touched,
             'is-valid': !imagen?.errors && imagen?.touched
           }"
           id="imagen-form"
           formControlName="imagen"
+          (change)="findImgName($event)"
         />
         <div *ngIf="imagen?.errors && imagen?.touched">
           <p *ngIf="imagen?.hasError('required')" class="text-danger">
@@ -135,7 +137,7 @@
   <ul>
     <li *ngFor="let proyecto of misProyectos">
       <span id="proyectoNombre">{{ proyecto.nombre }}</span>
-      <div class="container-buttons">
+      <div class="container-buttons" *ngIf="isAdmin">
         <button
           type="button"
           class="btn btn-add"
