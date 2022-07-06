@@ -1,9 +1,17 @@
 <app-menu></app-menu>
 <div class="container text-center">
-  <div *ngIf="isLogged; else loggedOut">
-    <h2>Bienvenido {{ nombreUsuario }}</h2>
+  <div class="greeting" *ngIf="isLogged; else loggedOut">
+    <h1>Bienvenido</h1>
+    <h1>{{ nombreUsuario }} !</h1>
+    <div class="container text-center greeting-btn">
+      <button class="btn-22" routerLink="/portfolio">
+        <span>Ver Portfolio</span>
+      </button>
+    </div>
   </div>
-  <ng-template #loggedOut
-    ><h2>Bienvenido, por favor inicia sesión</h2></ng-template
+  <ng-template #loggedOut>
+    <div class="no-greeting">
+      <h2>Bienvenido, por favor inicia sesión</h2>
+    </div></ng-template
   >
 </div>

@@ -6,14 +6,6 @@
   <div class="container addimg-buttons-container">
     <button
       type="button"
-      class="btn proyectosbtn"
-      [ngClass]="status ? 'btn-info' : 'btn-warning'"
-      (click)="imagenesToggle()"
-    >
-      {{ buttonText }}
-    </button>
-    <button
-      type="button"
       class="btn btn-add btn-add-m"
       [ngClass]="addStatus ? 'btn-warning' : 'btn-success'"
       (click)="showAddForm()"
@@ -82,6 +74,61 @@
           </p>
         </div>
       </div>
+      <div class="mb-3">
+        <label for="tecnologiasUsadas-form" class="form-label"
+          >Tecnologias Usadas</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid':
+              tecnologiasUsadas?.errors && tecnologiasUsadas?.touched,
+            'is-valid': !tecnologiasUsadas?.errors && tecnologiasUsadas?.touched
+          }"
+          id="tecnologiasUsadas-form"
+          formControlName="tecnologiasUsadas"
+        />
+        <div *ngIf="tecnologiasUsadas?.errors && tecnologiasUsadas?.touched">
+          <p
+            *ngIf="tecnologiasUsadas?.hasError('required')"
+            class="text-danger"
+          >
+            Las Tecnologias usadas son requeridas.
+          </p>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="caracteristicasNotables-form" class="form-label"
+          >Caracteristicas Notables</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid':
+              caracteristicasNotables?.errors &&
+              caracteristicasNotables?.touched,
+            'is-valid':
+              !caracteristicasNotables?.errors &&
+              caracteristicasNotables?.touched
+          }"
+          id="caracteristicasNotables-form"
+          formControlName="caracteristicasNotables"
+        />
+        <div
+          *ngIf="
+            caracteristicasNotables?.errors && caracteristicasNotables?.touched
+          "
+        >
+          <p
+            *ngIf="caracteristicasNotables?.hasError('required')"
+            class="text-danger"
+          >
+            Las Caracteristicas Notables son requeridas.
+          </p>
+        </div>
+      </div>
       <button type="submit" class="btn btn-primary">Agregar</button>
     </form>
   </div>
@@ -144,6 +191,32 @@
           </svg>
         </button>
       </div>
+      <button
+        type="button"
+        class="btn btn-view"
+        [ngClass]="{
+          'btn-warning': showImg == [proyecto.id],
+          'btn-info': showImg == 0,
+          'btn-secondary': showImg !== 0 && showImg !== [proyecto.id]
+        }"
+        (click)="imagenesToggle([proyecto.id])"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-eye img-btn"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+          />
+          <path
+            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+          />
+        </svg>
+      </button>
       <p>
         {{ proyecto.descripcion }}
       </p>
@@ -196,20 +269,61 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="imagen-form" class="form-label">Imagen</label>
+            <label for="tecnologiasUsadas-form" class="form-label"
+              >Tecnologias Usadas</label
+            >
             <input
               type="text"
               class="form-control"
               [ngClass]="{
-                'is-invalid': imagen?.errors && imagen?.touched,
-                'is-valid': !imagen?.errors && imagen?.touched
+                'is-invalid':
+                  tecnologiasUsadas?.errors && tecnologiasUsadas?.touched,
+                'is-valid':
+                  !tecnologiasUsadas?.errors && tecnologiasUsadas?.touched
               }"
-              id="imagen-form"
-              formControlName="imagen"
+              id="tecnologiasUsadas-form"
+              formControlName="tecnologiasUsadas"
             />
-            <div *ngIf="imagen?.errors && imagen?.touched">
-              <p *ngIf="imagen?.hasError('required')" class="text-danger">
-                La imagen es requerida.
+            <div
+              *ngIf="tecnologiasUsadas?.errors && tecnologiasUsadas?.touched"
+            >
+              <p
+                *ngIf="tecnologiasUsadas?.hasError('required')"
+                class="text-danger"
+              >
+                Las Tecnologias usadas son requeridas.
+              </p>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="caracteristicasNotables-form" class="form-label"
+              >Caracteristicas Notables</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  caracteristicasNotables?.errors &&
+                  caracteristicasNotables?.touched,
+                'is-valid':
+                  !caracteristicasNotables?.errors &&
+                  caracteristicasNotables?.touched
+              }"
+              id="caracteristicasNotables-form"
+              formControlName="caracteristicasNotables"
+            />
+            <div
+              *ngIf="
+                caracteristicasNotables?.errors &&
+                caracteristicasNotables?.touched
+              "
+            >
+              <p
+                *ngIf="caracteristicasNotables?.hasError('required')"
+                class="text-danger"
+              >
+                Las Caracteristicas Notables son requeridas.
               </p>
             </div>
           </div>
@@ -226,8 +340,36 @@
           Eliminar
         </button>
       </div>
-      <div class="container" [ngClass]="status ? 'ocultando' : 'viendoMas'">
-        <img alt="Img Proyecto" [src]="proyecto.imagen" class="proyectoimg" />
+      <div class="container" *ngIf="showImg == [proyecto.id]">
+        <div class="row">
+          <div class="container img-container col-6">
+            <img
+              alt="Img Proyecto"
+              [src]="proyecto.imagen"
+              class="proyectoimg"
+            />
+          </div>
+          <div class="col-6">
+            <div class="container">
+              <div class="row">
+                <div class="col img-text">
+                  <h4>Teconologias Usadas</h4>
+                  <p>
+                    {{ proyecto.tecnologiasUsadas }}
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col img-text">
+                  <h4>Caracteristicas Notables</h4>
+                  <p>
+                    {{ proyecto.caracteristicasNotables }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </li>
   </ul>

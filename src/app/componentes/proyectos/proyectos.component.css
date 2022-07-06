@@ -3,10 +3,21 @@
   font-size: larger;
 }
 
+.img-text {
+  margin-top: 12px;
+}
+
+.btn-view {
+  border-radius: 100%;
+  font-weight: bold;
+  margin-left: 10px;
+  width: 35px;
+  height: 35px;
+}
+
 .btn-add-m {
-  float: none;
+  float: right;
   margin: 0px;
-  margin-left: 5px;
 }
 
 .btn-github {
@@ -21,7 +32,7 @@
 
 .addimg-buttons-container {
   margin-top: 5px;
-  width: 216px;
+  width: 35px;
   display: inline-block;
   float: right;
 }

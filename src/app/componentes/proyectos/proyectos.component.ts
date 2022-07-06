@@ -9,8 +9,7 @@ import { PortfolioService } from 'src/app/servicios/portfolio.service';
 })
 export class ProyectosComponent implements OnInit {
   misProyectos: any;
-  status: boolean = true;
-  buttonText: string = 'Mostrar imagenes';
+  showImg: any = 0;
   addStatus: boolean = false;
   addText: string = '+';
   editFormId: any = 0;
@@ -26,6 +25,8 @@ export class ProyectosComponent implements OnInit {
       nombre: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
       imagen: ['', [Validators.required]],
+      tecnologiasUsadas: ['', [Validators.required]],
+      caracteristicasNotables: ['', [Validators.required]],
     });
   }
 
@@ -41,13 +42,12 @@ export class ProyectosComponent implements OnInit {
   }
 
   //Alterna en mostrar y ocultar las imagenes
-  imagenesToggle(): void {
-    if (this.status) {
-      this.buttonText = 'Ocultar imagenes';
+  imagenesToggle(id: any): void {
+    if (this.showImg !== id[0]) {
+      this.showImg = id[0];
     } else {
-      this.buttonText = 'Mostrar imagenes';
+      this.showImg = 0;
     }
-    this.status = !this.status;
   }
 
   //Alterna en mostrar y ocultar el formulario add y cambia el texto del boton de + a -
@@ -89,6 +89,12 @@ export class ProyectosComponent implements OnInit {
   get imagen() {
     return this.form.get('imagen');
   }
+  get tecnologiasUsadas() {
+    return this.form.get('tecnologiasUsadas');
+  }
+  get caracteristicasNotables() {
+    return this.form.get('caracteristicasNotables');
+  }
 
   //Control de los formularios
 
@@ -107,7 +113,8 @@ export class ProyectosComponent implements OnInit {
     let parametros = {
       nombre: this.nombre?.value,
       descripcion: this.descripcion?.value,
-      imagen: this.imagen?.value,
+      tecnologiasUsadas: this.tecnologiasUsadas?.value,
+      caracteristicasNotables: this.caracteristicasNotables?.value,
     };
     this.portfolioService
       .editPortfolio('proyectos/editar/', this.editFormId, parametros)
