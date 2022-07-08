@@ -16,7 +16,6 @@ export class EducacionComponent implements OnInit {
   deleteId: any = 0;
   fileName: string = '';
   form: FormGroup;
-  roles!: string[];
   isAdmin = false;
 
   constructor(
@@ -37,12 +36,7 @@ export class EducacionComponent implements OnInit {
     this.datosPortfolio.obtenerDatos().subscribe((data) => {
       this.educacionList = data.educacion;
     });
-    this.roles = this.tokenService.getAuthorities();
-    this.roles.forEach((rol) => {
-      if (rol === 'ROLE_ADMIN') {
-        this.isAdmin = true;
-      }
-    });
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   // Control de los botones que muestran los formularios

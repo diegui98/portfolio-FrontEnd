@@ -10,7 +10,6 @@ import { TokenService } from 'src/app/servicios/token.service';
 export class AcercaDeMiComponent implements OnInit {
   miPortfolio: any;
   editForm: boolean = false;
-  roles!: string[];
   isAdmin = false;
 
   constructor(
@@ -22,12 +21,7 @@ export class AcercaDeMiComponent implements OnInit {
     this.datosPortfolio.obtenerDatos().subscribe((data) => {
       this.miPortfolio = data.persona[0];
     });
-    this.roles = this.tokenService.getAuthorities();
-    this.roles.forEach((rol) => {
-      if (rol === 'ROLE_ADMIN') {
-        this.isAdmin = true;
-      }
-    });
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   //Abre nuevas ventanas para las redes sociales

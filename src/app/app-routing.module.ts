@@ -5,6 +5,7 @@ import { IniciarSesionComponent } from './componentes/iniciar-sesion/iniciar-ses
 import { PortfolioComponent } from './componentes/portfolio/portfolio.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { GuardGuard } from './servicios/guard.guard';
+import { LoginGuard } from './servicios/login.guard';
 
 const routes: Routes = [
   {
@@ -14,8 +15,12 @@ const routes: Routes = [
     data: { expectedRol: ['admin', 'user'] },
   },
   { path: 'inicio', component: IndexComponent },
-  { path: 'iniciar-sesion', component: IniciarSesionComponent },
-  { path: 'registro', component: RegistroComponent },
+  {
+    path: 'iniciar-sesion',
+    component: IniciarSesionComponent,
+    canActivate: [LoginGuard],
+  },
+  { path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
   { path: '', redirectTo: '/iniciar-sesion', pathMatch: 'full' },
 ];
 

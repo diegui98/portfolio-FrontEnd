@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  portfolioUrl: 'http://localhost:8080/portfolio/',
+  authUrl: 'http://localhost:8080/auth/',
 };
 
 /*

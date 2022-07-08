@@ -18,7 +18,6 @@ export class HabilidadesComponent implements OnInit {
   deleteIdD: any = 0;
   deleteIdB: any = 0;
   form: FormGroup;
-  roles!: string[];
   isAdmin = false;
 
   constructor(
@@ -40,12 +39,7 @@ export class HabilidadesComponent implements OnInit {
       this.misHabilidadesDuras = data.habilidades_duras;
       this.misHabilidadesBlandas = data.habilidades_blandas;
     });
-    this.roles = this.tokenService.getAuthorities();
-    this.roles.forEach((rol) => {
-      if (rol === 'ROLE_ADMIN') {
-        this.isAdmin = true;
-      }
-    });
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   // Control de los botones que muestran los formularios

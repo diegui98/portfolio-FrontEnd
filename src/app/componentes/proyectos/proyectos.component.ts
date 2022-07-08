@@ -17,7 +17,6 @@ export class ProyectosComponent implements OnInit {
   deleteId: any = 0;
   fileName: string = '';
   form: FormGroup;
-  roles!: string[];
   isAdmin = false;
 
   constructor(
@@ -39,12 +38,7 @@ export class ProyectosComponent implements OnInit {
     this.datosPortfolio.obtenerDatos().subscribe((data) => {
       this.misProyectos = data.proyectos;
     });
-    this.roles = this.tokenService.getAuthorities();
-    this.roles.forEach((rol) => {
-      if (rol === 'ROLE_ADMIN') {
-        this.isAdmin = true;
-      }
-    });
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   //Boton de github, abre nueva pestaña

@@ -16,7 +16,6 @@ export class ExperienciaComponent implements OnInit {
   deleteId: any = 0;
   fileName: string = '';
   form: FormGroup;
-  roles!: string[];
   isAdmin = false;
 
   constructor(
@@ -37,12 +36,7 @@ export class ExperienciaComponent implements OnInit {
     this.datosPortfolio.obtenerDatos().subscribe((data) => {
       this.experienciaList = data.experiencia;
     });
-    this.roles = this.tokenService.getAuthorities();
-    this.roles.forEach((rol) => {
-      if (rol === 'ROLE_ADMIN') {
-        this.isAdmin = true;
-      }
-    });
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
   //Alterna en mostrar y ocultar el formulario add y cambia el texto del boton de + a -

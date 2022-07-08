@@ -10,7 +10,6 @@ import { TokenService } from 'src/app/servicios/token.service';
   styleUrls: ['./registro.component.css'],
 })
 export class RegistroComponent implements OnInit {
-  isLogged = false;
   isRegister = false;
   isRegisterFail = false;
   nuevoUsuario!: NuevoUsuario;
@@ -26,11 +25,7 @@ export class RegistroComponent implements OnInit {
     private ruta: Router
   ) {}
 
-  ngOnInit(): void {
-    if (this.tokenService.getToken()) {
-      this.isLogged = true;
-    }
-  }
+  ngOnInit(): void {}
 
   onRegister(): void {
     this.nuevoUsuario = new NuevoUsuario(
