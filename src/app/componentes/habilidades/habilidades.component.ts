@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
 import { TokenService } from 'src/app/servicios/token.service';
 
@@ -24,7 +25,8 @@ export class HabilidadesComponent implements OnInit {
     private datosPortfolio: PortfolioService,
     private formBuilder: FormBuilder,
     private portfolioService: PortfolioService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
       habilidad: [''],
