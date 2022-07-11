@@ -11,6 +11,7 @@ import { TokenService } from 'src/app/servicios/token.service';
 export class ProyectosComponent implements OnInit {
   misProyectos: any;
   showImg: any = 0;
+  viewAll: string = 'Mostrar Todo';
   addStatus: boolean = false;
   addText: string = '+';
   editFormId: any = 0;
@@ -50,8 +51,13 @@ export class ProyectosComponent implements OnInit {
   imagenesToggle(id: any): void {
     if (this.showImg !== id[0]) {
       this.showImg = id[0];
+      this.viewAll = 'Ocultar Todo';
     } else {
       this.showImg = 0;
+      this.viewAll = 'Mostrar Todo';
+    }
+    if (id[0] !== -1) {
+      this.viewAll = 'Mostrar Todo';
     }
   }
 

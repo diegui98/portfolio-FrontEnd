@@ -8,7 +8,7 @@ import { TokenService } from 'src/app/servicios/token.service';
   styleUrls: ['./acerca-de-mi.component.css'],
 })
 export class AcercaDeMiComponent implements OnInit {
-  miPortfolio: any;
+  miPortfolio: any = '';
   editForm: boolean = false;
   isAdmin = false;
 
