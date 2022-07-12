@@ -32,6 +32,7 @@ export class ProyectosComponent implements OnInit {
       imagen: ['', [Validators.required]],
       tecnologiasUsadas: ['', [Validators.required]],
       caracteristicasNotables: ['', [Validators.required]],
+      github: ['', [Validators.required]],
     });
   }
 
@@ -43,8 +44,8 @@ export class ProyectosComponent implements OnInit {
   }
 
   //Boton de github, abre nueva pestaña
-  newTab() {
-    window.open('https://github.com/diegui98', '_blank');
+  newTab(link: string) {
+    window.open(link, '_blank');
   }
 
   //Alterna en mostrar y ocultar las imagenes
@@ -114,6 +115,9 @@ export class ProyectosComponent implements OnInit {
   get caracteristicasNotables() {
     return this.form.get('caracteristicasNotables');
   }
+  get github() {
+    return this.form.get('github');
+  }
 
   //Control de los formularios
 
@@ -128,6 +132,7 @@ export class ProyectosComponent implements OnInit {
       imagen: filePath,
       tecnologiasUsadas: this.tecnologiasUsadas?.value,
       caracteristicasNotables: this.caracteristicasNotables?.value,
+      github: this.github?.value,
     };
     this.portfolioService.postPortfolio(newForm, postUrl).subscribe();
     setTimeout(location.reload.bind(location), 800);
@@ -142,6 +147,7 @@ export class ProyectosComponent implements OnInit {
       descripcion: this.descripcion?.value,
       tecnologiasUsadas: this.tecnologiasUsadas?.value,
       caracteristicasNotables: this.caracteristicasNotables?.value,
+      github: this.github?.value,
     };
     this.portfolioService
       .editPortfolio('proyectos/editar/', this.editFormId, parametros)
