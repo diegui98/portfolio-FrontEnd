@@ -102,8 +102,8 @@
         <h4 class="educacion-titulo">
           <img alt="Logo" [src]="educacion.imagen" class="edulogo" />
           {{ educacion.escuela }}
-          <span>{{ educacion.fecha_fin }}</span>
         </h4>
+
         <div class="container-buttons" *ngIf="isAdmin">
           <button
             type="button"
@@ -160,6 +160,7 @@
             </svg>
           </button>
         </div>
+        <div class="fecha-fin-div">Finalizado {{ educacion.fecha_fin }}</div>
       </div>
       <div class="edu-descripcion">
         {{ educacion.descripcion }}

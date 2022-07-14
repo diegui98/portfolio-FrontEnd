@@ -1,25 +1,4 @@
 <section class="container proyectos">
-  <h3>Proyectos</h3>
-  <button
-    class="btn btn-primary btn-github"
-    (click)="
-      newTab(
-        'https://github.com/diegui98?tab=repositories&q=portfolio-project&type=&language=&sort='
-      )
-    "
-  >
-    Ver en Github
-  </button>
-  <button
-    class="btn btn-github"
-    [ngClass]="{
-      'btn-warning': showImg == [-1],
-      'btn-info': showImg !== [-1]
-    }"
-    (click)="imagenesToggle([-1])"
-  >
-    {{ viewAll }}
-  </button>
   <div class="container addimg-buttons-container" *ngIf="isAdmin">
     <button
       type="button"
@@ -29,6 +8,33 @@
     >
       {{ addText }}
     </button>
+  </div>
+  <div class="row">
+    <div class="col-sm-auto titulo">
+      <h3>Proyectos</h3>
+    </div>
+    <div class="col-12 col-sm-8 git-mostrar-container">
+      <button
+        class="btn btn-github"
+        [ngClass]="{
+          'btn-warning': showImg == [-1],
+          'btn-info': showImg !== [-1]
+        }"
+        (click)="imagenesToggle([-1])"
+      >
+        {{ viewAll }}
+      </button>
+      <button
+        class="btn btn-primary btn-github"
+        (click)="
+          newTab(
+            'https://github.com/diegui98?tab=repositories&q=portfolio-project&type=&language=&sort='
+          )
+        "
+      >
+        Ver en Github
+      </button>
+    </div>
   </div>
   <div *ngIf="addStatus" class="mt-2 container form-container">
     <h4>Agregar Proyecto</h4>
@@ -288,7 +294,7 @@
             <div class="container">
               <div class="row">
                 <div class="col img-text">
-                  <h4>Teconologias Usadas</h4>
+                  <h4>Teconologías Usadas</h4>
                   <p>
                     {{ proyecto.tecnologiasUsadas }}
                   </p>
@@ -296,7 +302,7 @@
               </div>
               <div class="row">
                 <div class="col img-text">
-                  <h4>Caracteristicas Notables</h4>
+                  <h4>Características Notables</h4>
                   <p>
                     {{ proyecto.caracteristicasNotables }}
                   </p>

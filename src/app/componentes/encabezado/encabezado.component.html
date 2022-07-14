@@ -1,16 +1,27 @@
 <div
-  class="container"
+  class="container text-center"
   id="name_and_tittle"
   [style]="miPortfolio.background_name_and_tittle"
 >
-  <img id="profile_AP" src="../../../assets/APLogo.png" alt="Foto de perfil." />
-  <img
-    id="profile_photo"
-    [src]="miPortfolio.profile_photo"
-    alt="Foto de perfil."
-  />
-  <h1 id="my_name">{{ miPortfolio.nombre }}</h1>
-  <div class="my_tittle">
-    {{ miPortfolio.titulo }}
+  <div class="row">
+    <div class="col-12 col-md-auto">
+      <img
+        id="profile_AP"
+        src="../../../assets/APLogo.png"
+        alt="Foto de perfil."
+      />
+    </div>
+
+    <div class="FNT col-12 col-md-10">
+      <img
+        id="profile_photo"
+        [src]="miPortfolio.profile_photo"
+        alt="Foto de perfil."
+      />
+      <h1 id="my_name">{{ miPortfolio.nombre }}</h1>
+      <div class="my_tittle">
+        {{ miPortfolio.titulo }}
+      </div>
+    </div>
   </div>
 </div>
