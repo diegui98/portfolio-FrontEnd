@@ -46,6 +46,7 @@
           <button
             class="btn btn-outline-success btn-block"
             [disabled]="!f.valid"
+            [ngClass]="{ disabled: !loginButtonStatus }"
             type="submit"
           >
             <svg

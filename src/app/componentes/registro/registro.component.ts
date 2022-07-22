@@ -10,6 +10,7 @@ import { TokenService } from 'src/app/servicios/token.service';
   styleUrls: ['./registro.component.css'],
 })
 export class RegistroComponent implements OnInit {
+  registerButtonStatus: boolean = true;
   isRegister = false;
   isRegisterFail = false;
   nuevoUsuario!: NuevoUsuario;
@@ -28,6 +29,7 @@ export class RegistroComponent implements OnInit {
   ngOnInit(): void {}
 
   onRegister(): void {
+    this.registerButtonStatus = false;
     this.nuevoUsuario = new NuevoUsuario(
       this.nombre,
       this.nombreUsuario,
@@ -45,7 +47,7 @@ export class RegistroComponent implements OnInit {
         this.isRegister = false;
         this.isRegisterFail = true;
         this.errMsj = err.error;
-        console.log(err.error);
+        this.registerButtonStatus = true;
       }
     );
   }

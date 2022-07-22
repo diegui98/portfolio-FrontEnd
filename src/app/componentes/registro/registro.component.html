@@ -65,6 +65,7 @@
           <button
             class="btn btn-outline-success btn-block"
             [disabled]="!f.valid"
+            [ngClass]="{ disabled: !registerButtonStatus }"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
