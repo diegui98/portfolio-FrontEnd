@@ -283,14 +283,14 @@
         *ngIf="showImg == [proyecto.id] || showImg == [-1]"
       >
         <div class="row">
-          <div class="container img-container col-6">
+          <div class="container img-container col-12 col-sm-12 col-md-6">
             <img
               alt="Img Proyecto"
               [src]="proyecto.imagen"
-              class="proyectoimg"
+              class="proyectoimg border border-secondary"
             />
           </div>
-          <div class="col-6">
+          <div class="col-12 col-sm-12 col-md-6">
             <div class="container">
               <div class="row">
                 <div class="col img-text">
