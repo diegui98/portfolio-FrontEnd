@@ -44,9 +44,9 @@
         </div>
         <div class="from-group">
           <button
-            class="btn btn-outline-success btn-block"
+            class="btn btn-outline-success btn-block mr-1"
             [disabled]="!f.valid"
-            [ngClass]="{ disabled: !loginButtonStatus }"
+            [ngClass]="{ disabled: loginButtonStatus }"
             type="submit"
           >
             <svg
@@ -68,6 +68,7 @@
             </svg>
             Iniciar Sesión
           </button>
+          <span *ngIf="loginButtonStatus">Logeando...</span>
         </div>
       </form>
       <div

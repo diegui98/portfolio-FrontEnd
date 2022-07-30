@@ -11,7 +11,7 @@ import { TokenService } from 'src/app/servicios/token.service';
   styleUrls: ['./iniciar-sesion.component.css'],
 })
 export class IniciarSesionComponent implements OnInit {
-  loginButtonStatus: boolean = true;
+  loginButtonStatus: boolean = false;
   loginUsuario!: LoginUsuario;
   nombreUsuario!: string;
   password!: string;
@@ -26,7 +26,7 @@ export class IniciarSesionComponent implements OnInit {
   ngOnInit(): void {}
 
   onLogin(): void {
-    this.loginButtonStatus = false;
+    this.loginButtonStatus = true;
     this.loginUsuario = new LoginUsuario(this.nombreUsuario, this.password);
     this.autenticacionService.login(this.loginUsuario).subscribe(
       (data) => {
@@ -35,7 +35,7 @@ export class IniciarSesionComponent implements OnInit {
       },
       (err) => {
         this.isLogginFailed = true;
-        this.loginButtonStatus = true;
+        this.loginButtonStatus = false;
       }
     );
   }
