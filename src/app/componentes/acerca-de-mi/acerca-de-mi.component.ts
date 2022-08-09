@@ -53,7 +53,13 @@ export class AcercaDeMiComponent implements OnInit {
     //Llamo al servicio dandole la url especifica de edicion de la descripcion y recargo la pag con 0,8seg de delay
     this.datosPortfolio
       .editPortfolio('persona/acerca/editar/', this.miPortfolio.id, parametros)
-      .subscribe();
-    setTimeout(location.reload.bind(location), 800);
+      .subscribe(
+        (data) => {
+          setTimeout(location.reload.bind(location), 500);
+        },
+        (err) => {
+          setTimeout(location.reload.bind(location), 500);
+        }
+      );
   }
 }

@@ -134,8 +134,14 @@ export class ProyectosComponent implements OnInit {
       caracteristicasNotables: this.caracteristicasNotables?.value,
       github: this.github?.value,
     };
-    this.portfolioService.postPortfolio(newForm, postUrl).subscribe();
-    setTimeout(location.reload.bind(location), 800);
+    this.portfolioService.postPortfolio(newForm, postUrl).subscribe(
+      (data) => {
+        setTimeout(location.reload.bind(location), 500);
+      },
+      (err) => {
+        setTimeout(location.reload.bind(location), 500);
+      }
+    );
   }
 
   //Contacta al portfolio.service para el putRequest
@@ -151,13 +157,25 @@ export class ProyectosComponent implements OnInit {
     };
     this.portfolioService
       .editPortfolio('proyectos/editar/', this.editFormId, parametros)
-      .subscribe();
-    setTimeout(location.reload.bind(location), 800);
+      .subscribe(
+        (data) => {
+          setTimeout(location.reload.bind(location), 500);
+        },
+        (err) => {
+          setTimeout(location.reload.bind(location), 500);
+        }
+      );
   }
 
   //Contacta al portfolio.service para el deleteRequest
   borrarProyecto(id: any) {
-    this.portfolioService.deletePortfolio('proyectos/borrar/' + id).subscribe();
-    setTimeout(location.reload.bind(location), 800);
+    this.portfolioService.deletePortfolio('proyectos/borrar/' + id).subscribe(
+      (data) => {
+        setTimeout(location.reload.bind(location), 500);
+      },
+      (err) => {
+        setTimeout(location.reload.bind(location), 500);
+      }
+    );
   }
 }

@@ -145,9 +145,15 @@ export class HabilidadesComponent implements OnInit {
       stat_bar: stat_barStyle,
     };
 
-    //LLamo al portfolio.service y recargo la pag con 0,8seg de delay
-    this.portfolioService.postPortfolio(habilidadObj, postUrl).subscribe();
-    setTimeout(location.reload.bind(location), 800);
+    //LLamo al portfolio.service y recargo la pag con 0,5seg de delay
+    this.portfolioService.postPortfolio(habilidadObj, postUrl).subscribe(
+      (data) => {
+        setTimeout(location.reload.bind(location), 500);
+      },
+      (err) => {
+        setTimeout(location.reload.bind(location), 500);
+      }
+    );
   }
 
   //Contacta al portfolio.service para el putRequest
@@ -186,11 +192,17 @@ export class HabilidadesComponent implements OnInit {
       stat_bar: stat_barStyle,
     };
 
-    //LLamo al portfolio.service y recargo la pag con 0,8seg de delay
+    //LLamo al portfolio.service y recargo la pag con 0,5seg de delay
     this.portfolioService
       .editPortfolio(editUrl, editCurrentId, parametros)
-      .subscribe();
-    setTimeout(location.reload.bind(location), 800);
+      .subscribe(
+        (data) => {
+          setTimeout(location.reload.bind(location), 500);
+        },
+        (err) => {
+          setTimeout(location.reload.bind(location), 500);
+        }
+      );
   }
 
   //Contacta al portfolio.service para el deleteRequest
@@ -203,8 +215,14 @@ export class HabilidadesComponent implements OnInit {
       deleteUrl = 'habilidades_blandas/borrar/';
     }
 
-    //LLamo al portfolio.service y recargo la pag con 0,8seg de delay
-    this.portfolioService.deletePortfolio(deleteUrl + id).subscribe();
-    setTimeout(location.reload.bind(location), 800);
+    //LLamo al portfolio.service y recargo la pag con 0,5seg de delay
+    this.portfolioService.deletePortfolio(deleteUrl + id).subscribe(
+      (data) => {
+        setTimeout(location.reload.bind(location), 500);
+      },
+      (err) => {
+        setTimeout(location.reload.bind(location), 500);
+      }
+    );
   }
 }

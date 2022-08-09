@@ -103,8 +103,14 @@ export class ExperienciaComponent implements OnInit {
       fecha_fin: this.fecha_fin?.value,
       descripcion: this.descripcion?.value,
     };
-    this.portfolioService.postPortfolio(newForm, postUrl).subscribe();
-    setTimeout(location.reload.bind(location), 800);
+    this.portfolioService.postPortfolio(newForm, postUrl).subscribe(
+      (data) => {
+        setTimeout(location.reload.bind(location), 500);
+      },
+      (err) => {
+        setTimeout(location.reload.bind(location), 500);
+      }
+    );
   }
 
   //Contacta al portfolio.service para el putRequest
@@ -118,15 +124,25 @@ export class ExperienciaComponent implements OnInit {
     };
     this.portfolioService
       .editPortfolio('experiencia/editar/', this.editFormId, parametros)
-      .subscribe();
-    setTimeout(location.reload.bind(location), 800);
+      .subscribe(
+        (data) => {
+          setTimeout(location.reload.bind(location), 500);
+        },
+        (err) => {
+          setTimeout(location.reload.bind(location), 500);
+        }
+      );
   }
 
   //Contacta al portfolio.service para el deleteRequest
   borrarExperiencia(id: any) {
-    this.portfolioService
-      .deletePortfolio('experiencia/borrar/' + id)
-      .subscribe();
-    setTimeout(location.reload.bind(location), 800);
+    this.portfolioService.deletePortfolio('experiencia/borrar/' + id).subscribe(
+      (data) => {
+        setTimeout(location.reload.bind(location), 500);
+      },
+      (err) => {
+        setTimeout(location.reload.bind(location), 500);
+      }
+    );
   }
 }
