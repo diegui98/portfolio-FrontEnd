@@ -55,10 +55,16 @@ export class AcercaDeMiComponent implements OnInit {
       .editPortfolio('persona/acerca/editar/', this.miPortfolio.id, parametros)
       .subscribe(
         (data) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.miPortfolio = data.persona[0];
+          });
+          this.editForm = false;
         },
         (err) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.miPortfolio = data.persona[0];
+          });
+          this.editForm = false;
         }
       );
   }

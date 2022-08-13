@@ -49,16 +49,27 @@ export class EducacionComponent implements OnInit {
       this.addText = '-';
     }
     this.addStatus = !this.addStatus;
+    this.editFormId = 0;
+    this.deleteId = 0;
+
+    this.escuela?.setValue('');
+    this.fecha_fin?.setValue('');
+    this.descripcion?.setValue('');
   }
 
   //Muestra el formulario edit dependiendo de la id y esconde al resto si fueron abiertos anteriormente
-  showEditEducacion(id: any) {
-    if (this.editFormId !== id[0]) {
-      this.editFormId = id[0];
+  showEditEducacion(educacion: any) {
+    if (this.editFormId !== educacion[0].id) {
+      this.editFormId = educacion[0].id;
       this.deleteId = 0;
-    } else if (this.editFormId == id[0]) {
+      this.addStatus = false;
+      this.addText = '+';
+    } else if (this.editFormId == educacion[0].id) {
       this.editFormId = 0;
     }
+    this.escuela?.setValue(educacion[0].escuela);
+    this.fecha_fin?.setValue(educacion[0].fecha_fin);
+    this.descripcion?.setValue(educacion[0].descripcion);
   }
 
   //Muestra el boton de confirmacion dependiendo de la id y esconde al resto si fueron abiertos anteriormente
@@ -66,6 +77,8 @@ export class EducacionComponent implements OnInit {
     if (this.deleteId !== id[0]) {
       this.deleteId = id[0];
       this.editFormId = 0;
+      this.addStatus = false;
+      this.addText = '+';
     } else if (this.deleteId == id[0]) {
       this.deleteId = 0;
     }
@@ -109,10 +122,18 @@ export class EducacionComponent implements OnInit {
     };
     this.portfolioService.postPortfolio(newForm, postUrl).subscribe(
       (data) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.educacionList = data.educacion;
+        });
+        this.addStatus = false;
+        this.addText = '+';
       },
       (err) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.educacionList = data.educacion;
+        });
+        this.addStatus = false;
+        this.addText = '+';
       }
     );
   }
@@ -130,10 +151,16 @@ export class EducacionComponent implements OnInit {
       .editPortfolio('educacion/editar/', this.editFormId, parametros)
       .subscribe(
         (data) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.educacionList = data.educacion;
+          });
+          this.editFormId = 0;
         },
         (err) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.educacionList = data.educacion;
+          });
+          this.editFormId = 0;
         }
       );
   }
@@ -142,10 +169,16 @@ export class EducacionComponent implements OnInit {
   borrarEducacion(id: any) {
     this.portfolioService.deletePortfolio('educacion/borrar/' + id).subscribe(
       (data) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.educacionList = data.educacion;
+        });
+        this.deleteId = 0;
       },
       (err) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.educacionList = data.educacion;
+        });
+        this.deleteId = 0;
       }
     );
   }

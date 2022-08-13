@@ -69,17 +69,32 @@ export class ProyectosComponent implements OnInit {
     } else if (!this.addStatus) {
       this.addText = '-';
     }
+    this.editFormId = 0;
+    this.deleteId = 0;
     this.addStatus = !this.addStatus;
+
+    this.nombre?.setValue('');
+    this.descripcion?.setValue('');
+    this.tecnologiasUsadas?.setValue('');
+    this.caracteristicasNotables?.setValue('');
+    this.github?.setValue('');
   }
 
   //Muestra el formulario edit dependiendo de la id y esconde al resto si fueron abiertos anteriormente
-  showEditProyecto(id: any) {
-    if (this.editFormId !== id[0]) {
-      this.editFormId = id[0];
+  showEditProyecto(proyecto: any) {
+    if (this.editFormId !== proyecto[0].id) {
+      this.editFormId = proyecto[0].id;
+      this.addStatus = false;
+      this.addText = '+';
       this.deleteId = 0;
-    } else if (this.editFormId == id[0]) {
+    } else if (this.editFormId == proyecto[0].id) {
       this.editFormId = 0;
     }
+    this.nombre?.setValue(proyecto[0].nombre);
+    this.descripcion?.setValue(proyecto[0].descripcion);
+    this.tecnologiasUsadas?.setValue(proyecto[0].tecnologiasUsadas);
+    this.caracteristicasNotables?.setValue(proyecto[0].caracteristicasNotables);
+    this.github?.setValue(proyecto[0].github);
   }
 
   //Muestra el boton de confirmacion dependiendo de la id y esconde al resto si fueron abiertos anteriormente
@@ -87,6 +102,8 @@ export class ProyectosComponent implements OnInit {
     if (this.deleteId !== id[0]) {
       this.deleteId = id[0];
       this.editFormId = 0;
+      this.addStatus = false;
+      this.addText = '+';
     } else if (this.deleteId == id[0]) {
       this.deleteId = 0;
     }
@@ -136,10 +153,18 @@ export class ProyectosComponent implements OnInit {
     };
     this.portfolioService.postPortfolio(newForm, postUrl).subscribe(
       (data) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.misProyectos = data.proyectos;
+        });
+        this.addStatus = false;
+        this.addText = '+';
       },
       (err) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.misProyectos = data.proyectos;
+        });
+        this.addStatus = false;
+        this.addText = '+';
       }
     );
   }
@@ -159,10 +184,16 @@ export class ProyectosComponent implements OnInit {
       .editPortfolio('proyectos/editar/', this.editFormId, parametros)
       .subscribe(
         (data) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.misProyectos = data.proyectos;
+          });
+          this.editFormId = 0;
         },
         (err) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.misProyectos = data.proyectos;
+          });
+          this.editFormId = 0;
         }
       );
   }
@@ -171,10 +202,16 @@ export class ProyectosComponent implements OnInit {
   borrarProyecto(id: any) {
     this.portfolioService.deletePortfolio('proyectos/borrar/' + id).subscribe(
       (data) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.misProyectos = data.proyectos;
+        });
+        this.deleteId = 0;
       },
       (err) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.misProyectos = data.proyectos;
+        });
+        this.deleteId = 0;
       }
     );
   }

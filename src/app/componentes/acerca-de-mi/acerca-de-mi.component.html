@@ -32,12 +32,9 @@
   </p>
   <div *ngIf="editForm" class="form-container">
     <h4>Editar Descripción</h4>
-    <textarea
-      class="form-control"
-      name="editValue"
-      #editValue
-      rows="3"
-    ></textarea>
+    <textarea class="form-control" name="editValue" #editValue rows="3">{{
+      miPortfolio.descripcion
+    }}</textarea>
     <button
       type="submit"
       class="btn btn-primary"

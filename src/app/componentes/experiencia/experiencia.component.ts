@@ -47,16 +47,27 @@ export class ExperienciaComponent implements OnInit {
       this.addText = '-';
     }
     this.addStatus = !this.addStatus;
+    this.editFormId = 0;
+    this.deleteId = 0;
+
+    this.nombre?.setValue('');
+    this.fecha_fin?.setValue('');
+    this.descripcion?.setValue('');
   }
 
   //Muestra el formulario edit dependiendo de la id y esconde al resto si fueron abiertos anteriormente
-  showEditExperiencia(id: any) {
-    if (this.editFormId !== id[0]) {
-      this.editFormId = id[0];
+  showEditExperiencia(experiencia: any) {
+    if (this.editFormId !== experiencia[0].id) {
+      this.editFormId = experiencia[0].id;
       this.deleteId = 0;
-    } else if (this.editFormId == id[0]) {
+      this.addStatus = false;
+      this.addText = '+';
+    } else if (this.editFormId == experiencia[0].id) {
       this.editFormId = 0;
     }
+    this.nombre?.setValue(experiencia[0].escuela);
+    this.fecha_fin?.setValue(experiencia[0].fecha_fin);
+    this.descripcion?.setValue(experiencia[0].descripcion);
   }
 
   //Muestra el boton de confirmacion dependiendo de la id y esconde al resto si fueron abiertos anteriormente
@@ -64,6 +75,8 @@ export class ExperienciaComponent implements OnInit {
     if (this.deleteId !== id[0]) {
       this.deleteId = id[0];
       this.editFormId = 0;
+      this.addStatus = false;
+      this.addText = '+';
     } else if (this.deleteId == id[0]) {
       this.deleteId = 0;
     }
@@ -105,10 +118,18 @@ export class ExperienciaComponent implements OnInit {
     };
     this.portfolioService.postPortfolio(newForm, postUrl).subscribe(
       (data) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.experienciaList = data.experiencia;
+        });
+        this.addStatus = false;
+        this.addText = '+';
       },
       (err) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.experienciaList = data.experiencia;
+        });
+        this.addStatus = false;
+        this.addText = '+';
       }
     );
   }
@@ -126,10 +147,16 @@ export class ExperienciaComponent implements OnInit {
       .editPortfolio('experiencia/editar/', this.editFormId, parametros)
       .subscribe(
         (data) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.experienciaList = data.experiencia;
+          });
+          this.editFormId = 0;
         },
         (err) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.experienciaList = data.experiencia;
+          });
+          this.editFormId = 0;
         }
       );
   }
@@ -138,10 +165,16 @@ export class ExperienciaComponent implements OnInit {
   borrarExperiencia(id: any) {
     this.portfolioService.deletePortfolio('experiencia/borrar/' + id).subscribe(
       (data) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.experienciaList = data.experiencia;
+        });
+        this.deleteId = 0;
       },
       (err) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.experienciaList = data.experiencia;
+        });
+        this.deleteId = 0;
       }
     );
   }

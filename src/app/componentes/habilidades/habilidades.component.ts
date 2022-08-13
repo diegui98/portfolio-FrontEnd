@@ -54,29 +54,45 @@ export class HabilidadesComponent implements OnInit {
       this.addText = '-';
     }
     this.addStatus = !this.addStatus;
+    this.editFormIdB = 0;
+    this.editFormIdD = 0;
+    this.deleteIdB = 0;
+    this.deleteIdD = 0;
+
+    this.habilidad?.setValue('');
+    this.nombre?.setValue('');
+    this.nivel?.setValue('');
+    this.stat_bar?.setValue('');
   }
 
   //Muestra el formulario edit dependiendo de la id y el tipo de la habilidad y esconde al resto si fueron abiertos anteriormente
-  showEditHabilidad(id: any, tipo: string) {
+  showEditHabilidad(habilidad: any, tipo: string) {
     if (tipo == 'D') {
-      if (this.editFormIdD !== id[0]) {
-        this.editFormIdD = id[0];
+      if (this.editFormIdD !== habilidad[0].id) {
+        this.editFormIdD = habilidad[0].id;
         this.deleteIdD = 0;
         this.deleteIdB = 0;
         this.editFormIdB = 0;
-      } else if (this.editFormIdD == id[0]) {
+        this.addStatus = false;
+        this.addText = '+';
+      } else if (this.editFormIdD == habilidad[0].id) {
         this.editFormIdD = 0;
       }
     } else if (tipo == 'B') {
-      if (this.editFormIdB !== id[0]) {
-        this.editFormIdB = id[0];
+      if (this.editFormIdB !== habilidad[0].id) {
+        this.editFormIdB = habilidad[0].id;
         this.deleteIdD = 0;
         this.deleteIdB = 0;
         this.editFormIdD = 0;
-      } else if (this.editFormIdB == id[0]) {
+        this.addStatus = false;
+        this.addText = '+';
+      } else if (this.editFormIdB == habilidad[0].id) {
         this.editFormIdB = 0;
       }
     }
+    this.nombre?.setValue(habilidad[0].nombre);
+    this.nivel?.setValue(habilidad[0].nivel);
+    this.stat_bar?.setValue(habilidad[0].stat_bar);
   }
 
   //Muestra el boton de confirmacion dependiendo de la id y el tipo de la habilidad y esconde al resto si fueron abiertos anteriormente
@@ -87,6 +103,8 @@ export class HabilidadesComponent implements OnInit {
         this.editFormIdD = 0;
         this.editFormIdB = 0;
         this.deleteIdB = 0;
+        this.addStatus = false;
+        this.addText = '+';
       } else if (this.deleteIdD == id[0]) {
         this.deleteIdD = 0;
       }
@@ -96,6 +114,8 @@ export class HabilidadesComponent implements OnInit {
         this.editFormIdD = 0;
         this.editFormIdB = 0;
         this.deleteIdD = 0;
+        this.addStatus = false;
+        this.addText = '+';
       } else if (this.deleteIdB == id[0]) {
         this.deleteIdB = 0;
       }
@@ -148,10 +168,20 @@ export class HabilidadesComponent implements OnInit {
     //LLamo al portfolio.service y recargo la pag con 0,5seg de delay
     this.portfolioService.postPortfolio(habilidadObj, postUrl).subscribe(
       (data) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.misHabilidadesDuras = data.habilidades_duras;
+          this.misHabilidadesBlandas = data.habilidades_blandas;
+        });
+        this.addStatus = false;
+        this.addText = '+';
       },
       (err) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.misHabilidadesDuras = data.habilidades_duras;
+          this.misHabilidadesBlandas = data.habilidades_blandas;
+        });
+        this.addStatus = false;
+        this.addText = '+';
       }
     );
   }
@@ -197,10 +227,20 @@ export class HabilidadesComponent implements OnInit {
       .editPortfolio(editUrl, editCurrentId, parametros)
       .subscribe(
         (data) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.misHabilidadesDuras = data.habilidades_duras;
+            this.misHabilidadesBlandas = data.habilidades_blandas;
+          });
+          this.editFormIdB = 0;
+          this.editFormIdD = 0;
         },
         (err) => {
-          setTimeout(location.reload.bind(location), 500);
+          this.datosPortfolio.obtenerDatos().subscribe((data) => {
+            this.misHabilidadesDuras = data.habilidades_duras;
+            this.misHabilidadesBlandas = data.habilidades_blandas;
+          });
+          this.editFormIdB = 0;
+          this.editFormIdD = 0;
         }
       );
   }
@@ -218,10 +258,20 @@ export class HabilidadesComponent implements OnInit {
     //LLamo al portfolio.service y recargo la pag con 0,5seg de delay
     this.portfolioService.deletePortfolio(deleteUrl + id).subscribe(
       (data) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.misHabilidadesDuras = data.habilidades_duras;
+          this.misHabilidadesBlandas = data.habilidades_blandas;
+        });
+        this.deleteIdB = 0;
+        this.deleteIdD = 0;
       },
       (err) => {
-        setTimeout(location.reload.bind(location), 500);
+        this.datosPortfolio.obtenerDatos().subscribe((data) => {
+          this.misHabilidadesDuras = data.habilidades_duras;
+          this.misHabilidadesBlandas = data.habilidades_blandas;
+        });
+        this.deleteIdB = 0;
+        this.deleteIdD = 0;
       }
     );
   }
