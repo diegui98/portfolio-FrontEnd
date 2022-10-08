@@ -118,7 +118,6 @@
         <h4 class="experiencia-titulo">
           <img alt="Logo" [src]="experiencia.imagen" class="edulogo" />
           {{ experiencia.nombre }}
-          <span>{{ experiencia.fecha_fin }}</span>
         </h4>
         <div class="container-buttons" *ngIf="isAdmin">
           <button
@@ -177,6 +176,7 @@
             </svg>
           </button>
         </div>
+        <div class="fecha-fin-div">Finalizado {{ experiencia.fecha_fin }}</div>
       </div>
       <div class="exp-descripcion">
         {{ experiencia.descripcion }}
